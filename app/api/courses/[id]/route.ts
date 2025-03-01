@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 
-export async function GET(req: Request, props: { params: Promise<{ id: string }> }) {
+export async function GET(
+  req: Request,
+  props: { params: Promise<{ id: string }> }
+) {
   const params = await props.params;
   const supabase = await createClient();
   const courseId = await params.id;
@@ -14,7 +17,9 @@ export async function GET(req: Request, props: { params: Promise<{ id: string }>
 
   const { data, error } = await supabase
     .from("courses")
-    .select("title, cover_image, description, videos(video_url),created_at")
+    .select(
+      "title, cover_image,categories(name), description, videos(video_url,description),created_at"
+    )
     .eq("id", courseId)
     .single();
 

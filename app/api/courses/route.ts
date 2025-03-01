@@ -5,7 +5,7 @@ export async function GET() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("courses")
-    .select("id, title, cover_image, videos(count)")
+    .select("id, title, cover_image,categories(name), videos(count)")
     .order("created_at", { ascending: false });
 
   if (error)
